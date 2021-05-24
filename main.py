@@ -2,22 +2,24 @@ import math
 
 
 def encrypt_by_cezar_cipher(text, encrypt_key):
-    eng_low = {'start': ord('a'), 'end': ord('z')}
+    eng_low_start = ord('a')
+    eng_low_end = ord('z')
     eng_upper = {'start': ord('A'), 'end': ord('Z')}
 
     ciphered = ''
 
     for cipher_symbol in text:
 
+        # код символа
         code_symbol = ord(cipher_symbol)
 
-        if code_symbol in range(eng_low['start'], eng_low['end'] + 1) \
+        if code_symbol in range(eng_low_start, eng_low_end + 1) \
                 or code_symbol in range(eng_upper['start'], eng_upper['end'] + 1):
 
             new_code = code_symbol + encrypt_key
 
-            if eng_low['end'] < new_code < eng_low['end'] + encrypt_key + 1:
-                new_code = eng_low['start'] + (new_code - eng_low['end'] - 1)
+            if eng_low_end < new_code < eng_low_end + encrypt_key + 1:
+                new_code = eng_low_start + (new_code - eng_low_end - 1)
 
             if eng_upper['end'] < new_code < eng_upper['end'] + encrypt_key + 1:
                 new_code = eng_upper['start'] + (new_code - eng_upper['end'] - 1)
@@ -29,8 +31,8 @@ def encrypt_by_cezar_cipher(text, encrypt_key):
     return ciphered
 
 
-def decrypt_cezar_cipher():
-    ...
+# def decrypt_cezar_cipher(text, encrypt_key):
+#     encrypt_by_cezar_cipher(text, -encrypt_key)
 
 
 def encrypt_by_permutation(text, key_word):
@@ -64,14 +66,15 @@ def encrypt_by_permutation(text, key_word):
 if __name__ == '__main__':
 
     # CEZAR CIPHER
+    # открываем файл на чтение
     with open('input.txt', 'r') as f_inp:
         encrypted = encrypt_by_cezar_cipher(f_inp.read(), 4)
 
     with open('encrypted.txt', 'w') as f_out:
         f_out.write(encrypted)
 
-    with open('decrypted.txt', 'w') as f_out:
-        f_out.write(decrypt_cezar_cipher(encrypted))
+    # with open('decrypted.txt', 'w') as f_out:
+    #     f_out.write(decrypt_cezar_cipher(encrypted, 4))
 
     # CIPHER OF PERMUTATION METHOD
     with open('input.txt', 'r') as f_inp:
@@ -80,6 +83,5 @@ if __name__ == '__main__':
     with open('encrypted_p.txt', 'w') as f_out:
         f_out.write(encrypted_p)
 
-    with open('decrypted_p.txt', 'w') as f_out:
-        f_out.write(decrypt_cezar_cipher(encrypted))
-
+    # with open('decrypted_p.txt', 'w') as f_out:
+    #     f_out.write(decrypt_cezar_cipher(encrypted))
